@@ -75,10 +75,10 @@ public class RoverController {
 	public ResponseEntity<Long> deployRover(
 			@NotNull(message = "X coordinate of the rover cannot be null.") @Min(value = 0, message = "Value of X coordinate cannot be less than 0.") @RequestParam Integer xCoordinate,
 			@NotNull(message = "Y coordinate of the rover cannot be null.") @Min(value = 0, message = "Value of Y coordinate cannot be less than 0.") @RequestParam Integer yCoordinate,
-			@NotEmpty(message = "Direction of the rover cannot be null nor empty.") @Pattern(regexp = "[NESW]", message = "Allowed values for direction are: N, E, S and W.") @RequestParam Character direction) {
+			@NotEmpty(message = "Direction of the rover cannot be null nor empty.") @Pattern(regexp = "[NESW]", message = "Allowed values for direction are: N, E, S and W.") @RequestParam String direction) {
 		plateauService.checkCoordinates(xCoordinate, yCoordinate);
 
-		Rover rover = new Rover(xCoordinate, yCoordinate, direction);
+		Rover rover = new Rover(xCoordinate, yCoordinate, direction.toCharArray()[0]);
 
 		return new ResponseEntity<>(roverService.addRover(rover), HttpStatus.OK);
 	}
